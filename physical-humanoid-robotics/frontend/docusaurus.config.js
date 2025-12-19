@@ -49,16 +49,7 @@ const config = {
           editUrl:
             'https://github.com/physical-humanoid-robotics/physical-humanoid-robotics-book/tree/main/packages/create-docusaurus/templates/shared/',
         },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          editUrl:
-            'https://github.com/physical-humanoid-robotics/physical-humanoid-robotics-book/tree/main/packages/create-docusaurus/templates/shared/',
-        },
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
