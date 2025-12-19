@@ -1,0 +1,88 @@
+openapi: 3.0.0
+info:
+  title: RAG Chatbot API
+  version: 1.0.0
+  description: API for Retrieval-Augmented Generation chatbot functionality
+paths:
+  /api/rag/query:
+    post:
+      summary: Query the RAG system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The user's question
+                context:
+                  type: string
+                  enum: [entire_book, current_chapter, selected_text]
+                  description: The scope of the query
+                selected_text:
+                  type: string
+                  description: Text selected by user (if context is selected_text)
+                user_id:
+                  type: string
+                  description: User ID for personalization
+              required:
+                - query
+                - context
+      responses:
+        '200':
+          description: Query response with sources
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                  sources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        chapter_id:
+                          type: string
+                        title:
+                          type: string
+                        content:
+                          type: string
+                        similarity_score:
+                          type: number
+        '400':
+          description: Invalid input
+  /api/rag/history:
+    get:
+      summary: Get chat history for user
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: session_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Chat history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    query:
+                      type: string
+                    response:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: date-time

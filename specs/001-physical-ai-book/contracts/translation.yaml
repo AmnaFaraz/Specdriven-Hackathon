@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Translation API
+  version: 1.0.0
+  description: API for content translation functionality
+paths:
+  /api/translate:
+    post:
+      summary: Translate content to specified language
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: Text to translate
+                target_language:
+                  type: string
+                  default: ur
+                  description: Target language code (e.g., ur for Urdu)
+                source_language:
+                  type: string
+                  default: en
+                  description: Source language code
+                context:
+                  type: string
+                  description: Context for translation (e.g., chapter title)
+                user_id:
+                  type: string
+                  description: User ID for caching purposes
+              required:
+                - text
+                - target_language
+      responses:
+        '200':
+          description: Translated content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  original_text:
+                    type: string
+                  translated_text:
+                    type: string
+                  detected_source_language:
+                    type: string
+                  target_language:
+                    type: string
+                  cached:
+                    type: boolean
+        '400':
+          description: Invalid input
+  /api/translate/chapter/{chapter_id}:
+    get:
+      summary: Get translated chapter content
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: target_language
+          in: query
+          required: true
+          schema:
+            type: string
+            default: ur
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Translated chapter content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chapter_id:
+                    type: string
+                  original_content:
+                    type: string
+                  translated_content:
+                    type: string
+                  language:
+                    type: string
