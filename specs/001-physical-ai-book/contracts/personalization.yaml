@@ -1,0 +1,132 @@
+openapi: 3.0.0
+info:
+  title: Personalization API
+  version: 1.0.0
+  description: API for chapter personalization settings
+paths:
+  /api/personalization/{chapter_id}:
+    get:
+      summary: Get personalization settings for a chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Personalization settings
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chapter_id:
+                    type: string
+                  difficulty_level:
+                    type: string
+                    enum: [beginner, intermediate, advanced]
+                  content_focus:
+                    type: string
+                    enum: [theoretical, practical, application]
+                  language_preference:
+                    type: string
+                    default: en
+    put:
+      summary: Update personalization settings for a chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                difficulty_level:
+                  type: string
+                  enum: [beginner, intermediate, advanced]
+                content_focus:
+                  type: string
+                  enum: [theoretical, practical, application]
+                language_preference:
+                  type: string
+                  default: en
+              required:
+                - user_id
+                - difficulty_level
+                - content_focus
+      responses:
+        '200':
+          description: Settings updated successfully
+        '400':
+          description: Invalid input
+  /api/personalization/content/{chapter_id}:
+    post:
+      summary: Get personalized content for a chapter
+      parameters:
+        - name: chapter_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                personalization_settings:
+                  $ref: '#/components/schemas/PersonalizationSettings'
+              required:
+                - user_id
+                - personalization_settings
+      responses:
+        '200':
+          description: Personalized content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  original_content:
+                    type: string
+                  personalized_content:
+                    type: string
+                  applied_transformations:
+                    type: array
+                    items:
+                      type: string
+        '400':
+          description: Invalid input
+components:
+  schemas:
+    PersonalizationSettings:
+      type: object
+      properties:
+        difficulty_level:
+          type: string
+          enum: [beginner, intermediate, advanced]
+        content_focus:
+          type: string
+          enum: [theoretical, practical, application]
+        language_preference:
+          type: string
+          default: en
+      required:
+        - difficulty_level
+        - content_focus

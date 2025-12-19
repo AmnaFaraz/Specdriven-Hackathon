@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir)",
+      "Bash(.specify/scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks)"
+    ]
+  }
+}

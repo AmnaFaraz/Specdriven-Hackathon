@@ -1,0 +1,446 @@
+/**
+ * Custom CSS for Physical AI & Humanoid Robotics Interactive Book
+ * Implements purplish gradient theme as specified
+ */
+
+/* Define color palette */
+:root {
+  --primary-purple: #7B2FF7;
+  --secondary-purple: #6A1B9A;
+  --accent-pink: #F107A3;
+  --light-purple: #E6CEFD;
+  --dark-purple: #4A148C;
+  --gradient-start: #7B2FF7;
+  --gradient-end: #F107A3;
+  --text-primary: #2C2C2C;
+  --text-secondary: #5F6368;
+  --background-primary: #FFFFFF;
+  --background-secondary: #F8F7FF;
+  --border-color: #E0E0E0;
+  --success-color: #4CAF50;
+  --warning-color: #FF9800;
+  --error-color: #F44336;
+}
+
+/* Dark mode colors */
+html[data-theme="dark"] {
+  --primary-purple: #B39DDB;
+  --secondary-purple: #8E6FB6;
+  --accent-pink: #F8BBD9;
+  --light-purple: #7C4DAA;
+  --dark-purple: #4527A0;
+  --gradient-start: #B39DDB;
+  --gradient-end: #F8BBD9;
+  --text-primary: #E0E0E0;
+  --text-secondary: #B0B0B0;
+  --background-primary: #121212;
+  --background-secondary: #1E1E2E;
+  --border-color: #333333;
+}
+
+/* Apply purplish gradient theme */
+.hero--primary {
+  background: azure;
+  color: white;
+}
+
+/* Navigation bar with purplish theme */
+.navbar {
+  background: linear-gradient(90deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+  color: white;
+}
+
+.navbar__brand {
+  color: white !important;
+}
+
+.navbar__title {
+  color: white !important;
+}
+
+.navbar__link {
+  color: white !important;
+}
+
+.navbar__link:hover {
+  color: var(--accent-pink) !important;
+}
+
+/* Sidebar with purplish theme */
+.menu {
+  background-color: var(--background-secondary);
+}
+
+.menu__link {
+  color: var(--text-primary);
+}
+
+.menu__link:hover {
+  background: linear-gradient(to right, transparent, var(--light-purple));
+  color: var(--primary-purple);
+}
+
+.menu__link--active {
+  background: linear-gradient(to right, var(--primary-purple), var(--secondary-purple));
+  color: white;
+}
+
+/* Cards and containers with purplish accents */
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(123, 47, 247, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(123, 47, 247, 0.2);
+}
+
+/* Buttons with purplish gradient */
+.button {
+  background: linear-gradient(135deg, var(--primary-purple) 0%, var(--accent-pink) 100%);
+  color: white !important;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, var(--secondary-purple) 0%, var(--accent-pink) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(123, 47, 247, 0.3);
+  color: white;
+}
+
+/* Headers with purplish accent */
+h1, h2, h3, h4, h5, h6 {
+  background: linear-gradient(90deg, var(--primary-purple), var(--accent-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Links with purplish accent */
+a {
+  color: var(--primary-purple);
+}
+
+a:hover {
+  color: var(--secondary-purple);
+  text-decoration: underline;
+}
+
+/* Code blocks with purplish theme */
+code {
+  background: linear-gradient(90deg, #f0e6ff, #ffe6f0);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'SFMono-Regular', Consolas, 'Roboto Mono', 'Droid Sans Mono', 'Liberation Mono', Menlo, Courier, monospace;
+}
+
+pre code {
+  background: var(--background-secondary);
+  padding: 16px;
+  border-radius: 8px;
+  overflow: auto;
+  border: 1px solid var(--border-color);
+}
+
+/* Tables with purplish header */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+}
+
+table th {
+  background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+table tr:nth-child(even) {
+  background-color: var(--background-secondary);
+}
+
+/* Alerts with purplish theme */
+.alert--primary {
+  background: linear-gradient(135deg, #E6CEFD, #F8E6FF);
+  border-left: 4px solid var(--primary-purple);
+  color: var(--text-primary);
+}
+
+.alert--secondary {
+  background: linear-gradient(135deg, #F1E8FF, #F0E6FF);
+  border-left: 4px solid var(--secondary-purple);
+  color: var(--text-primary);
+}
+
+/* Pagination with purplish theme */
+.pagination-nav__link {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--primary-purple);
+  box-shadow: 0 4px 12px rgba(123, 47, 247, 0.15);
+}
+
+/* Footer with purplish theme */
+.footer {
+  background: linear-gradient(135deg, var(--secondary-purple) 0%, var(--primary-purple) 100%);
+  color: white;
+}
+
+.footer__title {
+  color: white;
+}
+
+.footer__link-item {
+  color: var(--light-purple);
+}
+
+.footer__link-item:hover {
+  color: white;
+}
+
+/* Search bar with purplish theme */
+.navbar__search input {
+  border: 1px solid var(--primary-purple);
+  border-radius: 20px;
+  padding: 8px 16px;
+}
+
+/* Custom components for the book */
+.interactive-element {
+  background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
+  border: 2px solid var(--primary-purple);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.interactive-element::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-purple), var(--accent-pink));
+}
+
+/* Chatbot interface styling */
+.chatbot-container {
+  background: linear-gradient(135deg, #f5f0ff, #fdf0ff);
+  border-radius: 16px;
+  border: 1px solid var(--primary-purple);
+  box-shadow: 0 8px 32px rgba(123, 47, 247, 0.1);
+  margin: 20px 0;
+}
+
+.chatbot-header {
+  background: linear-gradient(90deg, var(--primary-purple), var(--secondary-purple));
+  color: white;
+  padding: 16px;
+  border-radius: 15px 15px 0 0;
+}
+
+/* Personalization controls */
+.personalization-controls {
+  background: linear-gradient(135deg, #f8f0ff, #fff0f8);
+  border: 1px solid var(--light-purple);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.personalization-toggle {
+  background: linear-gradient(135deg, var(--primary-purple), var(--accent-pink));
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Translation toggle styling */
+.translation-toggle {
+  background: linear-gradient(135deg, var(--secondary-purple), var(--primary-purple));
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin: 5px;
+}
+
+/* Module cards styling */
+.module-card {
+  background: linear-gradient(135deg, var(--background-primary), var(--background-secondary));
+  border: 1px solid var(--primary-purple);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+  transition: all 0.3s ease;
+}
+
+.module-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(123, 47, 247, 0.2);
+  border-color: var(--accent-pink);
+}
+
+.module-card h3 {
+  color: var(--primary-purple);
+  margin-top: 0;
+}
+
+/* Chapter navigation */
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+  padding: 20px;
+  background: var(--background-secondary);
+  border-radius: 12px;
+  border-left: 4px solid var(--primary-purple);
+}
+
+/* Exercise boxes */
+.exercise-box {
+  border: 2px dashed var(--primary-purple);
+  background: linear-gradient(135deg, #f9f5ff, #fff5f9);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  position: relative;
+}
+
+.exercise-box::before {
+  content: '💡 Exercise';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--primary-purple);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* Summary boxes */
+.summary-box {
+  border: 2px solid var(--accent-pink);
+  background: linear-gradient(135deg, #fff0fd, #f0f0ff);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  position: relative;
+}
+
+.summary-box::before {
+  content: '📋 Summary';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--accent-pink);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+/* Code block enhancements */
+.docusaurus-highlight-code-line {
+  background-color: rgba(123, 47, 247, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .hero--primary {
+    padding: 2rem 1rem;
+  }
+
+  .navbar-sidebar__brand {
+    background: linear-gradient(90deg, var(--primary-purple), var(--secondary-purple));
+    color: white;
+  }
+}
+
+/* Animation for interactive elements */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(123, 47, 247, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(123, 47, 247, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(123, 47, 247, 0); }
+}
+
+.interactive-element:hover {
+  animation: pulse 2s infinite;
+}
+
+/* Table of contents styling */
+.table-of-contents__link:hover {
+  color: var(--primary-purple);
+}
+
+.table-of-contents__link--active {
+  color: var(--primary-purple);
+  font-weight: 600;
+}
+
+/* Breadcrumbs */
+.breadcrumbs__item:not(:last-child)::after {
+  color: var(--primary-purple);
+}
+
+/* Tabs */
+.tabs__item {
+  color: var(--text-secondary);
+}
+
+.tabs__item:hover {
+  color: var(--primary-purple);
+}
+
+.tabs__item--active {
+  color: var(--primary-purple);
+  border-bottom: 2px solid var(--primary-purple);
+}
+
+/* Highlight for important text */
+.highlight-purple {
+  background: linear-gradient(120deg, var(--primary-purple), var(--accent-pink));
+  background-repeat: no-repeat;
+  background-size: 100% 40%;
+  background-position: 0 85%;
+  padding: 2px 0;
+  color: inherit;
+}
