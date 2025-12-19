@@ -134,4 +134,4 @@ Advanced ROS 2 communication patterns provide the tools needed for complex robot
 
 ---
 
-*Continue to [Chapter 3: ROS 2 for Humanoid Robot Control](/docs/module-1-chapter-3)*
+*Continue to [Chapter 3: ROS 2 for Humanoid Robot Control](/docs/modules/module-1/module-1-chapter-3)*

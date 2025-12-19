@@ -118,4 +118,4 @@ Join our community of roboticists and AI researchers to share knowledge, ask que
 
 ---
 
-*Ready to begin your journey into Physical AI and Humanoid Robotics? Start with [Module 1: The Robotic Nervous System](modules/module-1/chapter-1).*
+*Ready to begin your journey into Physical AI and Humanoid Robotics? Start with [Module 1: The Robotic Nervous System](modules/module-1/module-1-chapter-1).*

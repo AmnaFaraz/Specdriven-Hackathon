@@ -82,4 +82,4 @@ ROS 2 provides the essential communication infrastructure for robotics applicati
 
 ---
 
-*Continue to [Chapter 2: Advanced ROS 2 Communication Patterns](/docs/module-1-chapter-2)*
+*Continue to [Chapter 2: Advanced ROS 2 Communication Patterns](/docs/modules/module-1/module-1-chapter-2)*
