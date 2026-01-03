@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
-import { mockApi } from './mockApi';
-=======
->>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
 import './Chatbot.css';
 
 const Chatbot = () => {
@@ -12,27 +8,7 @@ const Chatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
-<<<<<<< HEAD
-  // Define API_BASE_URL using a constant or window object to avoid process.env issues in Docusaurus
-  const getAPIBaseUrl = () => {
-    // Check if we're in the browser environment
-    if (typeof window !== 'undefined' && window.location) {
-      // For development, you can set a custom API URL in localStorage
-      const customApiUrl = localStorage.getItem('API_BASE_URL');
-      if (customApiUrl) {
-        return customApiUrl;
-      }
-      // Default to localhost:8000 for development
-      return 'http://localhost:8000';
-    }
-    // For server-side rendering or fallback
-    return 'http://localhost:8000';
-  };
-
-  const API_BASE_URL = getAPIBaseUrl();
-=======
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
->>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
@@ -47,95 +23,6 @@ const Chatbot = () => {
       const lowerInput = inputValue.toLowerCase();
       if (lowerInput.includes('robotics') && (lowerInput.includes('explain') || lowerInput.includes('concept'))) {
         // Use robotics explainer agent
-<<<<<<< HEAD
-        try {
-          const response = await axios.post(`${API_BASE_URL}/api/subagent/execute`, {
-            query: inputValue,
-            agent_type: 'robotics_explainer',
-            user_id: localStorage.getItem('user_id') || null,
-            user_preferences: {
-              background: localStorage.getItem('background') || ''
-            }
-          });
-
-          const botMessage = {
-            text: response.data.result.explanation || response.data.result.query,
-            sender: 'bot',
-            timestamp: new Date()
-          };
-          setMessages(prev => [...prev, botMessage]);
-        } catch (error) {
-          // If backend fails, use mock API
-          console.log('Using mock API for robotics explainer');
-          const mockResponse = await mockApi.executeSubagent(inputValue, 'robotics_explainer');
-          const botMessage = {
-            text: mockResponse.result.explanation || mockResponse.result.query,
-            sender: 'bot',
-            timestamp: new Date()
-          };
-          setMessages(prev => [...prev, botMessage]);
-        }
-      } else if (lowerInput.includes('ros2') && (lowerInput.includes('code') || lowerInput.includes('generate'))) {
-        // Use ROS2 code agent
-        try {
-          const response = await axios.post(`${API_BASE_URL}/api/subagent/execute`, {
-            query: inputValue,
-            agent_type: 'ros2_code',
-            user_id: localStorage.getItem('user_id') || null
-          });
-
-          const botMessage = {
-            text: `Here's the generated ROS2 code:\n\n\`\`\`python\n${response.data.result.generated_code}\n\`\`\``,
-            sender: 'bot',
-            timestamp: new Date()
-          };
-          setMessages(prev => [...prev, botMessage]);
-        } catch (error) {
-          // If backend fails, use mock API
-          console.log('Using mock API for ROS2 code generation');
-          const mockResponse = await mockApi.executeSubagent(inputValue, 'ros2_code');
-          const botMessage = {
-            text: `Here's the generated ROS2 code:\n\n\`\`\`python\n${mockResponse.result.generated_code}\n\`\`\``,
-            sender: 'bot',
-            timestamp: new Date()
-          };
-          setMessages(prev => [...prev, botMessage]);
-        }
-      } else {
-        // Use regular RAG query
-        try {
-          // Get selected text if any
-          const selectedText = window.getSelection().toString();
-
-          const response = await axios.post(`${API_BASE_URL}/api/rag/query`, {
-            query: inputValue,
-            context: selectedText ? 'selected_text' : 'entire_book',
-            selected_text: selectedText || null,
-            user_id: localStorage.getItem('user_id') || null
-          });
-
-          const botMessage = {
-            text: response.data.response,
-            sender: 'bot',
-            sources: response.data.sources,
-            timestamp: new Date()
-          };
-
-          setMessages(prev => [...prev, botMessage]);
-        } catch (error) {
-          // If backend fails, use mock API
-          console.log('Using mock API for RAG query');
-          const mockResponse = await mockApi.ragQuery(inputValue, 'entire_book', null);
-          const botMessage = {
-            text: mockResponse.response,
-            sender: 'bot',
-            sources: mockResponse.sources,
-            timestamp: new Date()
-          };
-
-          setMessages(prev => [...prev, botMessage]);
-        }
-=======
         const response = await axios.post(`${API_BASE_URL}/api/subagent/execute`, {
           query: inputValue,
           agent_type: 'robotics_explainer',
@@ -185,7 +72,6 @@ const Chatbot = () => {
         };
 
         setMessages(prev => [...prev, botMessage]);
->>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
       }
     } catch (error) {
       const errorMessage = {
