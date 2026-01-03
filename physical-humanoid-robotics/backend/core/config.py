@@ -25,10 +25,17 @@ class Settings(BaseSettings):
     # Claude
     claude_api_key: str = os.getenv("CLAUDE_API_KEY", "")
 
+    # Gemini
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
+
     # JWT
     secret_key: str = os.getenv("SECRET_KEY", "your-default-secret-key-change-in-production")
     algorithm: str = os.getenv("ALGORITHM", "HS256")
     access_token_expire_minutes: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+
+    # Better Auth Configuration
+    better_auth_secret: str = os.getenv("BETTER_AUTH_SECRET", "your_better_auth_secret")
+    better_auth_url: str = os.getenv("BETTER_AUTH_URL", "http://localhost:8000")
 
     # CORS
     allowed_origins: List[str] = ["*"]  # In production, specify your frontend domain

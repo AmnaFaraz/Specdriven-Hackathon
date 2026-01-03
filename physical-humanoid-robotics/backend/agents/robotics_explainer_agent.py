@@ -1,10 +1,10 @@
 from typing import Dict, Any
 from core.config import settings
-from openai import OpenAI
+from services.gemini_service import GeminiService
 
 class RoboticsExplainerAgent:
     def __init__(self):
-        self.client = OpenAI(api_key=settings.openai_api_key)
+        self.gemini_service = GeminiService()
 
     def explain_concept(self, concept: str, user_background: str = None) -> Dict[str, Any]:
         """
@@ -24,14 +24,7 @@ class RoboticsExplainerAgent:
         4. Technical details appropriate to the user's background
         """
 
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=800,
-            temperature=0.7
-        )
-
-        explanation = response.choices[0].message.content
+        explanation = self.gemini_service.generate_response(prompt)
 
         return {
             "concept": concept,

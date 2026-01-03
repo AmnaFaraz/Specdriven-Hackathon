@@ -9,6 +9,11 @@ from typing import Optional
 router = APIRouter()
 
 # Request models
+class PersonalizationSettingsModel(BaseModel):
+    difficulty_level: str  # 'beginner', 'intermediate', 'advanced'
+    content_focus: str     # 'theoretical', 'practical', 'application'
+    language_preference: Optional[str] = "en"
+
 class PersonalizationUpdateRequest(BaseModel):
     user_id: str
     difficulty_level: str  # 'beginner', 'intermediate', 'advanced'
@@ -18,11 +23,6 @@ class PersonalizationUpdateRequest(BaseModel):
 class PersonalizationSettingsRequest(BaseModel):
     user_id: str
     personalization_settings: PersonalizationSettingsModel
-
-class PersonalizationSettingsModel(BaseModel):
-    difficulty_level: str  # 'beginner', 'intermediate', 'advanced'
-    content_focus: str     # 'theoretical', 'practical', 'application'
-    language_preference: Optional[str] = "en"
 
 # Response models
 class PersonalizationResponse(BaseModel):

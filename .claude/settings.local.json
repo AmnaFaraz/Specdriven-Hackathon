@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(dir)",
-      "Bash(.specify/scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks)"
+      "Bash(.specify/scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks)",
+      "Bash(dir physical-humanoid-robotics)",
+      "Bash(node --version)",
+      "Bash(dir \"physical-humanoid-robotics\\\\frontend\\\\content\")",
+      "Bash(npm start)"
     ]
   }
 }

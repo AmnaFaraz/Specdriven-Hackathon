@@ -1,7 +1,7 @@
 from typing import Dict, Any, Optional
 from sqlalchemy.orm import Session
 from core.config import settings
-from openai import OpenAI
+from services.gemini_service import GeminiService
 from models.content import TranslationCache
 from datetime import datetime, timedelta
 import json
@@ -9,7 +9,7 @@ import json
 class TranslationService:
     def __init__(self, db: Session):
         self.db = db
-        self.client = OpenAI(api_key=settings.openai_api_key)
+        self.gemini_service = GeminiService()
 
     def translate(self, text: str, target_language: str = "ur",
                   source_language: str = "en", context: str = None,
@@ -30,7 +30,7 @@ class TranslationService:
                 "cached": True
             }
 
-        # Perform translation using OpenAI
+        # Perform translation using Gemini
         prompt = f"""
         Translate the following text to {target_language}:
         {text}
@@ -38,14 +38,7 @@ class TranslationService:
         Context: {context or 'No context provided'}
         """
 
-        response = self.client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=1000,
-            temperature=0.3
-        )
-
-        translated_text = response.choices[0].message.content
+        translated_text = self.gemini_service.generate_response(prompt)
 
         # Cache the translation
         self._cache_translation(cache_key, text, translated_text, target_language, user_id)

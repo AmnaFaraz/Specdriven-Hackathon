@@ -10,7 +10,21 @@ load_dotenv()
 # Database configuration
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://username:password@localhost:5432/physical_humanoid_robotics")
 
-engine = create_engine(DATABASE_URL)
+# Use SQLite for local development if PostgreSQL is not available
+try:
+    # Try to connect to PostgreSQL
+    if DATABASE_URL.startswith("postgresql"):
+        engine = create_engine(DATABASE_URL)
+        # Test the connection
+        with engine.connect() as conn:
+            pass
+    else:
+        # Use the configured database
+        engine = create_engine(DATABASE_URL)
+except:
+    # If PostgreSQL connection fails, use SQLite
+    engine = create_engine("sqlite:///./physical_humanoid_robotics.db")
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

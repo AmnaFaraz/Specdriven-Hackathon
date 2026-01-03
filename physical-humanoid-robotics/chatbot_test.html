@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        
+        button {
+            background: #4a00e0;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        button:hover {
+            background: #6a0dad;
+        }
+        
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chatbot Mock API Test</h1>
+        
+        <div class="test-section">
+            <h3>Test RAG Queries</h3>
+            <button onclick="testRagQuery('Hello')">Hello</button>
+            <button onclick="testRagQuery('Hi there')">Hi there</button>
+            <button onclick="testRagQuery('What is a robot?')">What is a robot?</button>
+            <button onclick="testRagQuery('What is robotics?')">What is robotics?</button>
+            <button onclick="testRagQuery('Explain ROS2 concepts')">Explain ROS2 concepts</button>
+            <button onclick="testRagQuery('What is NVIDIA Isaac?')">What is NVIDIA Isaac?</button>
+            <button onclick="testRagQuery('How does Gazebo work?')">How does Gazebo work?</button>
+            <div id="rag-result" class="result"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>Test Subagent Queries</h3>
+            <button onclick="testSubagent('Explain how robots work', 'robotics_explainer')">Robotics Explainer</button>
+            <button onclick="testSubagent('Generate ROS2 publisher', 'ros2_code')">ROS2 Code Generator</button>
+            <div id="subagent-result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Mock API implementation
+        const mockResponses = {
+            general: [
+                "The field of robotics combines engineering and computer science to design, construct, and operate robots. These machines can assist humans in various tasks, from manufacturing to space exploration.",
+                "Robotics is an interdisciplinary branch of engineering and science that includes mechanical engineering, electrical engineering, computer science, and others. It deals with the design, construction, operation, and use of robots, as well as computer systems for their control, sensory feedback, and information processing.",
+                "Humanoid robots are robots with physical features resembling human bodies. They typically have a head, torso, two arms, and two legs, and may have a face with eyes and mouth.",
+                "NVIDIA Isaac is a robotics platform that provides tools and technologies for developing, simulating, and deploying AI-powered robots. It includes Isaac Sim for simulation and Isaac ROS for perception and navigation.",
+                "ROS 2 (Robot Operating System 2) is flexible framework for writing robot software. It's a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robot platforms.",
+                "Gazebo is a robot simulator that provides realistic 3D simulation environments for robotics development. It allows testing of algorithms, training of robots, and experimentation without the need for physical hardware."
+            ],
+            robotics: [
+                "Robotics is an interdisciplinary field that encompasses mechanical engineering, electrical engineering, and computer science. It involves the design, construction, operation, and use of robots.",
+                "A robot is a programmable machine that can execute tasks autonomously or semi-autonomously. Modern robots often incorporate artificial intelligence to make decisions based on sensor input.",
+                "Robotics applications span across various industries including manufacturing, healthcare, agriculture, space exploration, and domestic services.",
+                "The main components of a robot include sensors (to perceive the environment), actuators (to move), a control system (to process information), and a power source."
+            ],
+            ros2: [
+                "ROS 2 (Robot Operating System 2) is a flexible framework for writing robot software. It's a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robot platforms.",
+                "ROS 2 provides several key features including message passing between nodes, package management, and tools for debugging and visualization.",
+                "In ROS 2, nodes are processes that perform computation. Nodes are organized into packages for sharing and reuse.",
+                "ROS 2 uses a DDS (Data Distribution Service) implementation for communication between nodes, which provides a publish-subscribe communication pattern."
+            ],
+            isaac: [
+                "NVIDIA Isaac is a robotics platform that provides tools and technologies for developing, simulating, and deploying AI-powered robots.",
+                "Isaac Sim is NVIDIA's robotics simulator that provides realistic 3D simulation environments for robotics development.",
+                "Isaac ROS is a collection of packages that accelerate perception and navigation workloads for robotics applications.",
+                "Isaac provides tools for training and deploying AI models for robotics applications, leveraging NVIDIA's GPU computing capabilities."
+            ],
+            gazebo: [
+                "Gazebo is a robot simulator that provides realistic 3D simulation environments for robotics development.",
+                "Gazebo provides physics simulation, sensor simulation, and realistic rendering capabilities for testing robots in virtual environments.",
+                "Gazebo allows developers to test robot algorithms without the need for physical hardware, reducing development time and costs.",
+                "Gazebo integrates with ROS/ROS2 to provide seamless simulation and real-world deployment capabilities."
+            ],
+            vla: [
+                "Vision-Language-Action (VLA) models combine visual perception, language understanding, and action execution in robotics.",
+                "VLA models enable robots to understand natural language commands and perform corresponding physical actions in real-world environments.",
+                "These models integrate computer vision, natural language processing, and robotic control to create more intuitive human-robot interaction.",
+                "VLA models represent a significant advancement in making robots more accessible to non-expert users through natural language commands."
+            ]
+        };
+
+        const mockRos2Code = {
+            publisher: `import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MinimalPublisher(Node):
+
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(String, 'topic', 10)
+        timer_period = 0.5  # seconds
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        self.i = 0
+
+    def timer_callback(self):
+        msg = String()
+        msg.data = 'Hello World: %d' % self.i
+        self.publisher_.publish(msg)
+        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.i += 1
+
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_publisher = MinimalPublisher()
+    rclpy.spin(minimal_publisher)
+    minimal_publisher.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()`,
+          
+            subscriber: `import rclpy
+from rclpy.node import Node
+from std_msgs.msg import String
+
+class MinimalSubscriber(Node):
+
+    def __init__(self):
+        super().__init__('minimal_subscriber')
+        self.subscription = self.create_subscription(
+            String,
+            'topic',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+
+    def listener_callback(self, msg):
+        self.get_logger().info('I heard: "%s"' % msg.data)
+
+def main(args=None):
+    rclpy.init(args=args)
+    minimal_subscriber = MinimalSubscriber()
+    rclpy.spin(minimal_subscriber)
+    minimal_subscriber.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()`
+        };
+
+        function getMockResponse(query) {
+            const lowerQuery = query.toLowerCase();
+            
+            if (lowerQuery.includes('robot') || lowerQuery.includes('robotics')) {
+                return mockResponses.robotics[Math.floor(Math.random() * mockResponses.robotics.length)];
+            } else if (lowerQuery.includes('ros') || lowerQuery.includes('ros2')) {
+                return mockResponses.ros2[Math.floor(Math.random() * mockResponses.ros2.length)];
+            } else if (lowerQuery.includes('isaac') || lowerQuery.includes('nvidia')) {
+                return mockResponses.isaac[Math.floor(Math.random() * mockResponses.isaac.length)];
+            } else if (lowerQuery.includes('gazebo')) {
+                return mockResponses.gazebo[Math.floor(Math.random() * mockResponses.gazebo.length)];
+            } else if (lowerQuery.includes('vla') || lowerQuery.includes('vision-language') || lowerQuery.includes('vision language')) {
+                return mockResponses.vla[Math.floor(Math.random() * mockResponses.vla.length)];
+            } else {
+                return mockResponses.general[Math.floor(Math.random() * mockResponses.general.length)];
+            }
+        }
+
+        function getMockRos2Code(query) {
+            if (query.toLowerCase().includes('publisher')) {
+                return mockRos2Code.publisher;
+            } else if (query.toLowerCase().includes('subscriber')) {
+                return mockRos2Code.subscriber;
+            } else {
+                // Return a random code example
+                const keys = Object.keys(mockRos2Code);
+                const randomKey = keys[Math.floor(Math.random() * keys.length)];
+                return mockRos2Code[randomKey];
+            }
+        }
+
+        async function ragQuery(query, context, selectedText) {
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            return {
+                response: getMockResponse(query),
+                sources: [
+                    {
+                        chapter_id: "1.1",
+                        title: "Introduction to Robotics",
+                        content: "Robotics is an interdisciplinary branch of engineering and science that includes mechanical engineering, electrical engineering, computer science, and others.",
+                        similarity_score: 0.95
+                    },
+                    {
+                        chapter_id: "2.3",
+                        title: "ROS 2 Fundamentals",
+                        content: "ROS 2 (Robot Operating System 2) is flexible framework for writing robot software. It's a collection of tools, libraries, and conventions.",
+                        similarity_score: 0.87
+                    }
+                ]
+            };
+        }
+        
+        async function executeSubagent(query, agentType) {
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            if (agentType === 'robotics_explainer') {
+                return {
+                    result: {
+                        explanation: getMockResponse(query),
+                        concept: query,
+                        background_applied: true
+                    }
+                };
+            } else if (agentType === 'ros2_code') {
+                return {
+                    result: {
+                        generated_code: getMockRos2Code(query),
+                        query: query
+                    }
+                };
+            } else {
+                return {
+                    result: {
+                        response: getMockResponse(query),
+                        query: query
+                    }
+                };
+            }
+        }
+
+        async function testRagQuery(query) {
+            document.getElementById('rag-result').innerText = 'Processing...';
+            try {
+                const response = await ragQuery(query, 'entire_book', null);
+                document.getElementById('rag-result').innerHTML = 
+                    `<strong>Query:</strong> ${query}\n\n` +
+                    `<strong>Response:</strong> ${response.response}\n\n` +
+                    `<strong>Sources:</strong> ${response.sources.length} sources`;
+            } catch (error) {
+                document.getElementById('rag-result').innerText = `Error: ${error.message}`;
+            }
+        }
+
+        async function testSubagent(query, agentType) {
+            document.getElementById('subagent-result').innerText = 'Processing...';
+            try {
+                const response = await executeSubagent(query, agentType);
+                if (agentType === 'ros2_code') {
+                    document.getElementById('subagent-result').innerHTML = 
+                        `<strong>Query:</strong> ${query}\n\n` +
+                        `<strong>Generated Code:</strong>\n${response.result.generated_code}`;
+                } else {
+                    document.getElementById('subagent-result').innerHTML = 
+                        `<strong>Query:</strong> ${query}\n\n` +
+                        `<strong>Response:</strong> ${response.result.explanation}`;
+                }
+            } catch (error) {
+                document.getElementById('subagent-result').innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
