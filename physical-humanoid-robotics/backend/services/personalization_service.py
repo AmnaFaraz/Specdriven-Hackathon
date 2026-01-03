@@ -1,7 +1,11 @@
 from typing import Dict, Any
 from sqlalchemy.orm import Session
 from core.config import settings
+<<<<<<< HEAD
 from services.gemini_service import GeminiService
+=======
+from openai import OpenAI
+>>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
 from models.user import User
 from models.personalization import PersonalizationSettings
 from pydantic import BaseModel
@@ -14,7 +18,11 @@ class PersonalizationSettingsModel(BaseModel):
 class PersonalizationService:
     def __init__(self, db: Session):
         self.db = db
+<<<<<<< HEAD
         self.gemini_service = GeminiService()
+=======
+        self.client = OpenAI(api_key=settings.openai_api_key)
+>>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
 
     def get_personalized_content(self, chapter_id: str, user_id: str,
                                 settings: PersonalizationSettingsModel) -> Dict[str, Any]:
@@ -57,7 +65,18 @@ class PersonalizationService:
         Return a version that is appropriate for the specified difficulty level and focus area.
         """
 
+<<<<<<< HEAD
         return self.gemini_service.generate_response(prompt)
+=======
+        response = self.client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=800,
+            temperature=0.6
+        )
+
+        return response.choices[0].message.content
+>>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
 
     def get_user_preferences(self, user_id: str) -> Dict[str, Any]:
         """

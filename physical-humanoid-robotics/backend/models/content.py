@@ -11,7 +11,11 @@ class Chapter(Base):
     title = Column(String, nullable=False)
     content = Column(Text, nullable=False)
     content_vector = Column(Text, nullable=True)  # Vector embedding as JSON string
+<<<<<<< HEAD
     chapter_metadata = Column(Text, nullable=True)  # JSON string
+=======
+    metadata = Column(Text, nullable=True)  # JSON string
+>>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
 

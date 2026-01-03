@@ -9,11 +9,14 @@ from typing import Optional
 router = APIRouter()
 
 # Request models
+<<<<<<< HEAD
 class PersonalizationSettingsModel(BaseModel):
     difficulty_level: str  # 'beginner', 'intermediate', 'advanced'
     content_focus: str     # 'theoretical', 'practical', 'application'
     language_preference: Optional[str] = "en"
 
+=======
+>>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
 class PersonalizationUpdateRequest(BaseModel):
     user_id: str
     difficulty_level: str  # 'beginner', 'intermediate', 'advanced'
@@ -24,6 +27,14 @@ class PersonalizationSettingsRequest(BaseModel):
     user_id: str
     personalization_settings: PersonalizationSettingsModel
 
+<<<<<<< HEAD
+=======
+class PersonalizationSettingsModel(BaseModel):
+    difficulty_level: str  # 'beginner', 'intermediate', 'advanced'
+    content_focus: str     # 'theoretical', 'practical', 'application'
+    language_preference: Optional[str] = "en"
+
+>>>>>>> 0959fde799531f61e2f4f0f8682c944ad3633a73
 # Response models
 class PersonalizationResponse(BaseModel):
     chapter_id: str
